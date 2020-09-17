@@ -1,0 +1,10 @@
+ML_implementations
+==================
+
+.. toctree::
+   :maxdepth: 4
+
+   ML_implementations.neuralnets
+   ML_implementations.sampling
+   ML_implementations.regression
+	

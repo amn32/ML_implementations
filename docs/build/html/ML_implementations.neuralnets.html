@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Neural Networks &mdash; ML_implementations 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Regression" href="ML_implementations.regression.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="ML_implementations.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ML_implementations
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML_implementations.regression.html">Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML_implementations.sampling.html">Sampling</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ML_implementations</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ML_implementations.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Neural Networks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ML_implementations.neuralnets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ML_implementations.neuralnets.neuralnets">
+<span id="neural-networks"></span><h1>Neural Networks<a class="headerlink" href="#module-ML_implementations.neuralnets.neuralnets" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN">
+<em class="property">class </em><code class="sig-name descname">BNN</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./BNN_logdir/', lr=0.001, nb_epochs=10, batch_size=50, n=60000, len_edge1=28, len_edge2=28, labels=10, draws=50, activation=&lt;function relu&gt;, logit_max=&lt;function softmax&gt;, strides=[1, 2, 2], convols=[(4, 4), (4, 4), (4, 4)], padding='SAME', pooling=True, pool_size=2, pool_strid=2, structure1=[32, 64, 128, None, 1024, 100], structure2=['conv', 'conv', 'conv', 'flat', 'dense', 'dense']</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bayesian Neural Network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lr</strong> (<em>learning rate</em>) – </p></li>
+<li><p><strong>n</strong> (<em>number of training exemplars</em>) – </p></li>
+<li><p><strong>len_edge1</strong> (<em>width of image</em>) – </p></li>
+<li><p><strong>len_edge2</strong> (<em>height of image</em>) – </p></li>
+<li><p><strong>labels</strong> (<em>number of class labels</em>) – </p></li>
+<li><p><strong>draws</strong> (<em>number of Monte Carlo draws over which probabilities are computed</em>) – </p></li>
+<li><p><strong>activation</strong> (<em>activation function used in every layer</em>) – </p></li>
+<li><p><strong>logit_max</strong> (<em>activation function for the logit layer</em>) – </p></li>
+<li><p><strong>structure</strong> (<em>list of layer widths</em>) – </p></li>
+<li><p><strong>strides</strong> (<em>list of strides</em><em>, </em><em>for each layer</em>) – </p></li>
+<li><p><strong>convols</strong> (<em>list of convolutions</em><em>, </em><em>for each layer</em>) – </p></li>
+<li><p><strong>padding</strong> (<em>specify the padding to be used with each convolution</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.plot_posterior">
+<code class="sig-name descname">plot_posterior</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.plot_posterior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.sample_predictions">
+<code class="sig-name descname">sample_predictions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">test_im</span></em>, <em class="sig-param"><span class="n">samples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.sample_predictions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.save_posterior">
+<code class="sig-name descname">save_posterior</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.save_posterior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.test">
+<code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.BNN.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.BNN.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN">
+<em class="property">class </em><code class="sig-name descname">CNN</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./CNN_logdir/', lr=0.001, nb_epochs=10, batch_size=50, n=60000, len_edge1=28, len_edge2=28, labels=10, activation=&lt;function relu&gt;, logit_max=&lt;function softmax&gt;, strides=[1, 2, 2], convols=[(4, 4), (4, 4), (4, 4)], padding='SAME', pooling=True, pool_size=2, pool_strid=2, structure=[32, 64, 128]</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a convolutional neural network for image classification</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.test">
+<code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.CNN.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.CNN.train" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_train</strong> (<em>ndarray</em>) – Training x data</p></li>
+<li><p><strong>y_train</strong> (<em>ndarray</em>) – Training y data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE">
+<em class="property">class </em><code class="sig-name descname">DAE</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./DAE_logdir/', lr=0.001, nb_epochs=10, batch_size=50, n=60000, len_edge1=28, len_edge2=28, activation1=&lt;function relu&gt;, activation2=&lt;function relu&gt;, activationf=&lt;function sigmoid&gt;, strides1=[1, 2, 2], convols1=[(4, 4), (4, 4), (4, 4)], padding1='SAME', structure1=[32, 64, 128], strides2=[2, 2, 1], convols2=[(4, 4), (4, 4), (4, 4)], padding2='SAME', structure2=[64, 32, 1]</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Denoising Auto Encoder</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.add_noise">
+<code class="sig-name descname">add_noise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">noise</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.add_noise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">ims</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">noise</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the MSE over the test set,
+where the error is averaged over ims number of images,
+with injected noise variance of noise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.denoise">
+<code class="sig-name descname">denoise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">noisy_im</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.denoise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.single_accuracy">
+<code class="sig-name descname">single_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">test_image</span></em>, <em class="sig-param"><span class="n">noise</span></em>, <em class="sig-param"><span class="n">test_size</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.single_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the MSE of the denoised image from the original</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">model_noise</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model_noise determines the variance of noise injected at the training stage</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DAE.visualise">
+<code class="sig-name descname">visualise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original</span></em>, <em class="sig-param"><span class="n">noise</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DAE.visualise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE">
+<em class="property">class </em><code class="sig-name descname">DimAE</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./dimAE_logdir/', lr=0.001, nb_epochs=1, batch_size=50, n=60000, num_chans=100, activation=&lt;function relu&gt;, encoder=[80, 40], latent_dim=10, verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensionality Reducing Auto Encoder</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE.reduce">
+<code class="sig-name descname">reduce</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE.reduce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.DimAE.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.DimAE.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP">
+<em class="property">class </em><code class="sig-name descname">MLP</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./MLP_logdir/', lr=0.001, nb_epochs=10, batch_size=50, n=60000, img_size=784, labels=10, activation=&lt;function relu&gt;, logit_max=&lt;function softmax&gt;, structure=[1000, 1000]</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multilayer perceptron</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.test">
+<code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MLP.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MLP.train" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_train</strong> (<em>ndarray</em>) – Training x data</p></li>
+<li><p><strong>y_train</strong> (<em>ndarray</em>) – Training y data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL">
+<em class="property">class </em><code class="sig-name descname">MTL</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./NN_logdir/', lambda_=0.5, lr=0.001, nb_epochs=10, n=60000, batch_size=50, len_edge1=28, len_edge2=28, labels=10, activation=&lt;function relu&gt;, logit_max=&lt;function softmax&gt;, structure={'base': [32, 64, 128], 'shared_dense': [3136], 'task1': [1024, 100, 10], 'task2': [1024, 100, 3]}</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds_1</span></em>, <em class="sig-param"><span class="n">preds_2</span></em>, <em class="sig-param"><span class="n">y1</span></em>, <em class="sig-param"><span class="n">y2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.test_MTL">
+<code class="sig-name descname">test_MTL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.test_MTL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.MTL.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y1</span></em>, <em class="sig-param"><span class="n">y2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.MTL.train" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – Training x data</p></li>
+<li><p><strong>y1</strong> (<em>ndarray</em>) – Training y data for task 1</p></li>
+<li><p><strong>y2</strong> (<em>ndarray</em>) – Training y data for task 2</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.NN">
+<em class="property">class </em><code class="sig-name descname">NN</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./NN_logdir/', lr=0.001, nb_epochs=10, batch_size=50, n=60000, len_edge1=28, len_edge2=28, labels=10, activation=&lt;function relu&gt;, logit_max=&lt;function softmax&gt;, strides=[1, 2, 2], convols=[(4, 4), (4, 4), (4, 4)], padding='SAME', pooling=True, pool_size=2, pool_strid=2, structure1=[32, 64, 128], structure2=['conv', 'conv', 'conv']</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a neural network with dense and convolutional layers for image classification</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.calc_accuracy">
+<code class="sig-name descname">calc_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.calc_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.test">
+<code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.NN.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.NN.train" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – Training x data</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – Training y data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.SLP">
+<em class="property">class </em><code class="sig-name descname">SLP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.SLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single Layer Perceptron</p>
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.SLP.optimise">
+<code class="sig-name descname">optimise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.SLP.optimise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.SLP.plot_errors">
+<code class="sig-name descname">plot_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.SLP.plot_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.SLP.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.SLP.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.SLP.visualise">
+<code class="sig-name descname">visualise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">weights</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.SLP.visualise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.TFSOM">
+<em class="property">class </em><code class="sig-name descname">TFSOM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xdim</span></em>, <em class="sig-param"><span class="n">ydim</span></em>, <em class="sig-param"><span class="n">n_nodes</span></em>, <em class="sig-param"><span class="n">lr</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">r</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">50</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.TFSOM" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.TFSOM.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.TFSOM.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.TFSOM.optimiser">
+<code class="sig-name descname">optimiser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.TFSOM.optimiser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.TFSOM.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_train</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.TFSOM.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE">
+<em class="property">class </em><code class="sig-name descname">VAE</code><span class="sig-paren">(</span><em class="sig-param">output_dir='./VAE_MLP_logdir', nlatent=2, len_edge1=28, len_edge2=28, batch=64, epochs=20, alpha=0.001, activation=&lt;function relu&gt;, encoder=[512, 256, 128], decoder=[128, 256, 512], activationf=&lt;function sigmoid&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.compute_loss">
+<code class="sig-name descname">compute_loss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.get_batch">
+<code class="sig-name descname">get_batch</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.get_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops through each argument in batches of [size]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.optimizer">
+<code class="sig-name descname">optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.sample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.train" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>ndarray</em>) – Training x data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.visualise_image">
+<code class="sig-name descname">visualise_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.visualise_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ML_implementations.neuralnets.neuralnets.VAE.visualise_manifold">
+<code class="sig-name descname">visualise_manifold</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">sep</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ML_implementations.neuralnets.neuralnets.VAE.visualise_manifold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualise the mapped 2D manifold</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-ML_implementations.neuralnets"></span></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ML_implementations.regression.html" class="btn btn-neutral float-right" title="Regression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ML_implementations.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Alex Norris
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
