@@ -1,6 +1,6 @@
-# mlportopt - Overview
+# Overview
 
-Here is a collection of the models and algorithms I have implemented in Python. Please refere to the relevant notebooks in the ML_notebooks folder for guided explanations.
+Here is a collection of the models and algorithms I have implemented in Python. Please refer to the relevant notebooks in the ML_notebooks folder for guided explanations.
 
 Full documentation coming soon as a readthedocs webpage - full conversion to Numpy style docstring in progress
 
@@ -14,41 +14,41 @@ from ML_implementations.module import *
 
 ## neuralnets
 
-### Single Layer Perceptron
+- Single Layer Perceptron
 
-### Multi Layer Perceptron
+- Multi Layer Perceptron
 
-### Multi-Task Learning
+- Multi-Task Learning
 
-### Flexible Neural Net (can take any combination of dense or convolutional layers)
+- Flexible Neural Net (can take any combination of dense or convolutional layers)
 
-### Bayesian Neural Network
+- Bayesian Neural Network
 
-### Denoising Auto Encoder
+- Denoising Auto Encoder
 
-### Variational Autoencoder
+- Variational Autoencoder
 
-### Tensorflow Self-Organising Map
+- Tensorflow Self-Organising Map
 
 ## sampling
 
-### Metropolis-Hastings
+- Metropolis-Hastings
 
-### Hamiltonian MCMC
+- Hamiltonian MCMC
 
 ## regression
 
-### OLS/PLS
+- OLS/PLS
 
-### KNN Regression
+- KNN Regression
 
-### Decision Tree Regression
+- Decision Tree Regression
 
-### Regression Forest
+- Regression Forest
 
-### Gaussian Process in Numpy
+- Gaussian Process in Numpy
 
-### Gausian Process in TensorFlow
+- Gausian Process in TensorFlow
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
