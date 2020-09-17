@@ -2,7 +2,7 @@
 
 Here is a collection of the models and algorithms I have implemented in Python. Please refere to the relevant notebooks in the ML_notebooks folder for guided explanations.
 
-Full documentation may be found [here](./docs/build/html/index.html)
+Full documentation coming soon as a readthedocs webpage - full conversion to Numpy style docstring in progress
 
 ## Usage
 
