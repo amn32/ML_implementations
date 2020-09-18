@@ -9,6 +9,8 @@ from scipy                  import stats
 from sklearn.decomposition  import PCA
 from tqdm                   import tqdm_notebook as tqdm
 from tensorflow             import keras
+import tensorflow_probability  as tfp
+import seaborn as sns
 
 tf.disable_eager_execution()
 warnings.filterwarnings('ignore')
@@ -208,13 +210,13 @@ class MLP:
         init    = (tf.global_variables_initializer(), 
                    tf.local_variables_initializer())
 
-        saver   = tf.train.Saver()
-        summary = tf.Summary()
-        sess    = tf.InteractiveSession()
-        sess.run(init)
+        saver        = tf.train.Saver()
+        summary      = tf.Summary()
+        self.sess    = tf.InteractiveSession()
+        self.sess.run(init)
 
         writer = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
 
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -234,7 +236,7 @@ class MLP:
                 input_y_train = y_in[i*self.batch_size: (i+1)*self.batch_size]
 
 
-                _ , preds, loss, loss_summ_train = sess.run([self.trainer, 
+                _ , preds, loss, loss_summ_train = self.sess.run([self.trainer, 
                                                              self.preds, 
                                                              self.loss, 
                                                              self.loss_summ], 
@@ -248,9 +250,9 @@ class MLP:
                 writer.add_summary(loss_summ_train, epoch * self.iterations + i)
                 self.Loss.append(loss/self.n)
 
-            saver.save(sess, self.output_dir, global_step=epoch) 
+            saver.save(self.sess, self.output_dir, global_step=epoch) 
             
-        return sess
+        return self.sess
     
     def test(self, x): 
 
@@ -262,7 +264,7 @@ class MLP:
         for i in range(iterations):
 
             input_x_test = x[i*batch_size_test: (i+1)*batch_size_test]
-            preds_test   = sess.run(self.preds, 
+            preds_test   = self.sess.run(self.preds, 
                                      feed_dict={self.im: input_x_test})
 
             self.prediction.append(np.argmax(preds_test, axis=1))
@@ -270,7 +272,7 @@ class MLP:
             if np.mod(test_points, batch_size_test) !=0:
 
                 input_x_test = x[i*batch_size_test: -1]
-                preds_test   = sess.run(self.preds, 
+                preds_test   = self.sess.run(self.preds, 
                                      feed_dict={self.im: input_x_test})
 
                 self.prediction.append(np.argmax(preds, axis=1))
@@ -418,11 +420,11 @@ class CNN:
 
         saver   = tf.train.Saver()
         summary = tf.Summary()
-        sess    = tf.InteractiveSession()
-        sess.run(init)
+        self.sess    = tf.InteractiveSession()
+        self.sess.run(init)
 
         writer = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
 
         if not os.path.exists(self.output_dir):
 
@@ -446,7 +448,7 @@ class CNN:
                 input_x_train = x_in[i*self.batch_size: (i+1)*self.batch_size]
                 input_y_train = y_in[i*self.batch_size: (i+1)*self.batch_size]
 
-                _ , preds, loss, loss_summ_train = sess.run([self.trainer,
+                _ , preds, loss, loss_summ_train = self.sess.run([self.trainer,
                                                              self.preds, 
                                                              self.loss, 
                                                              self.loss_summ], 
@@ -459,9 +461,9 @@ class CNN:
                 writer.add_summary(loss_summ_train, epoch * self.nb_iterations + i)
                 self.Loss.append(loss/self.n)
             
-            saver.save(sess, self.output_dir, global_step=epoch) 
+            saver.save(self.sess, self.output_dir, global_step=epoch) 
 
-        return sess
+        return self.sess
 
     def test(self, x):
 
@@ -475,7 +477,7 @@ class CNN:
         for i in range(iterations):
 
             input_x_test = x[i*batch_size_test: (i+1)*batch_size_test]
-            preds_test   = sess.run(self.preds, feed_dict={self.im: input_x_test})
+            preds_test   = self.sess.run(self.preds, feed_dict={self.im: input_x_test})
             
             self.prediction.append(np.argmax(preds_test, axis=1))
 
@@ -483,7 +485,7 @@ class CNN:
 
                 input_x_test = x[i*batch_size_test: -1]
 
-                preds_test   = sess.run(self.preds, feed_dict={self.im: input_x_test})
+                preds_test   = self.sess.run(self.preds, feed_dict={self.im: input_x_test})
 
                 self.prediction.append(np.argmax(preds_test, axis=1))
 
@@ -535,7 +537,7 @@ class NN:
         convols:    list of convolutions, for each layer
         padding:    specify the padding to be used with each convolution
         '''
-        
+        tf.reset_default_graph()
         self.n             = n
         self.len_edge1     = len_edge1
         self.len_edge2     = len_edge2
@@ -642,11 +644,11 @@ class NN:
 
         saver   = tf.train.Saver()
         summary = tf.Summary()
-        sess    = tf.InteractiveSession()
-        sess.run(init)
+        self.sess    = tf.InteractiveSession()
+        self.sess.run(init)
 
         writer = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
 
         if not os.path.exists(self.output_dir):
 
@@ -670,7 +672,7 @@ class NN:
                 input_x_train = x_in[i*self.batch_size: (i+1)*self.batch_size]
                 input_y_train = y_in[i*self.batch_size: (i+1)*self.batch_size]
 
-                _ , preds, loss, loss_summ_train = sess.run([self.trainer,
+                _ , preds, loss, loss_summ_train = self.sess.run([self.trainer,
                                                              self.preds, 
                                                              self.loss, 
                                                              self.loss_summ], 
@@ -683,9 +685,9 @@ class NN:
                 writer.add_summary(loss_summ_train, epoch * self.nb_iterations + i)
                 self.Loss.append(loss/self.n)
             
-            saver.save(sess, self.output_dir, global_step=epoch) 
+            saver.save(self.sess, self.output_dir, global_step=epoch) 
 
-        return sess
+        return self.sess
 
     def test(self, x):
 
@@ -699,7 +701,7 @@ class NN:
         for i in range(iterations):
 
             input_x_test = x[i*batch_size_test: (i+1)*batch_size_test]
-            preds_test   = sess.run(self.preds, feed_dict={self.im: input_x_test})
+            preds_test   = self.sess.run(self.preds, feed_dict={self.im: input_x_test})
             
             self.prediction.append(np.argmax(preds_test, axis=1))
 
@@ -707,7 +709,7 @@ class NN:
 
                 input_x_test = x[i*batch_size_test: -1]
 
-                preds_test   = sess.run(self.preds, feed_dict={self.im: input_x_test})
+                preds_test   = self.sess.run(self.preds, feed_dict={self.im: input_x_test})
 
                 self.prediction.append(np.argmax(preds_test, axis=1))
 
@@ -725,7 +727,8 @@ class NN:
     
 class MTL:
     
-    def __init__(self, output_dir = './NN_logdir/',
+    def __init__(self, x_train, y_train_1, y_train_2,
+                 output_dir = './NN_logdir/',
                  lambda_    = 0.5,
                  lr         = 0.001, 
                  nb_epochs  = 10,
@@ -764,9 +767,6 @@ class MTL:
         self.nb_epochs       = nb_epochs
         self.nb_iterations   = self.n // batch_size
         self.output_dir      = output_dir
-        self.x_train         = x_train
-        self.y_train_1       = y_train_1
-        self.y_train_2       = y_train_2
         self.lambda_         = lambda_
         self.structure       = structure
         self.base            = self.structure['base']
@@ -907,13 +907,13 @@ class MTL:
         self.optimizer()   
 
         init = (tf.global_variables_initializer(),tf.local_variables_initializer())
-        sess = tf.InteractiveSession()
-        sess.run(init)    
+        self.sess = tf.InteractiveSession()
+        self.sess.run(init)    
 
         saver   = tf.train.Saver()
         summary = tf.Summary()
         writer  = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
 
         if not os.path.exists(self.output_dir):
 
@@ -934,7 +934,7 @@ class MTL:
                 input_y_train_1 = y_in_1[i*self.batch_size: (i+1)*self.batch_size]
                 input_y_train_2 = y_in_2[i*self.batch_size: (i+1)*self.batch_size]
 
-                _, preds_1, preds_2, loss_1, loss_2, loss_summ = sess.run([self.trainer,
+                _, preds_1, preds_2, loss_1, loss_2, loss_summ = self.sess.run([self.trainer,
                                                                            self.pred_1, 
                                                                            self.pred_2, 
                                                                            self.loss_task_1, 
@@ -953,9 +953,9 @@ class MTL:
 
                 writer.add_summary(loss_summ, epoch * self.nb_iterations + i)
 
-        saver.save(sess, self.output_dir, global_step=epoch) 
+        saver.save(self.sess, self.output_dir, global_step=epoch) 
 
-        return sess
+        return self.sess
 
     def test_MTL(self, x):
 
@@ -969,7 +969,7 @@ class MTL:
 
             input_x_test = x[i*batch_size_test: (i+1)*batch_size_test]
 
-            preds_test_1, preds_test_2 = sess.run([self.pred_1, self.pred_2], 
+            preds_test_1, preds_test_2 = self.sess.run([self.pred_1, self.pred_2], 
                                      feed_dict={self.X: input_x_test})
 
             self.preds_1.append(np.argmax(preds_test_1, axis=1))
@@ -978,7 +978,7 @@ class MTL:
             if np.mod(nb_test_points, batch_size_test) !=0:
 
                 input_x_test               = x_test[i*batch_size_test: -1]
-                preds_test_1, preds_test_2 = sess.run([self.pred_1, self.pred_2], 
+                preds_test_1, preds_test_2 = self.sess.run([self.pred_1, self.pred_2], 
                                      feed_dict={self.X: input_x_test})
 
                 self.preds_1.append(np.argmax(preds_test_1, axis=1))
@@ -995,7 +995,7 @@ class MTL:
         acc_test_1  = np.mean((all_preds_1==y_real_1)*1)
         acc_test_2  = np.mean((all_preds_2==y_real_2)*1)
 
-        print('Test accuracy achieved: %.3f' %(acc_test_1,acc_test_2))
+        print(f'Test accuracy achieved: {acc_test_1}, {acc_test_2}')
 
         return acc_test_1, acc_test_2
     
@@ -1130,11 +1130,11 @@ class VAE:
         
         saver   = tf.train.Saver()
         summary = tf.Summary()
-        sess    = tf.InteractiveSession()
-        sess.run(init)
+        self.sess    = tf.InteractiveSession()
+        self.sess.run(init)
 
         writer  = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
   
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -1145,23 +1145,23 @@ class VAE:
             
             self.losses  = []
             
-            for xb, in self.get_batch(x_train, size = self.batch):
+            for xb, in self.get_batch(x, size = self.batch):
             
                 nb = len(xb)
-                sess.run(self.trainer, feed_dict = {self.t_X : xb})
-                self.losses.append(nb * sess.run(self.loss, feed_dict = {self.t_X : xb}))
+                self.sess.run(self.trainer, feed_dict = {self.t_X : xb})
+                self.losses.append(nb * self.sess.run(self.loss, feed_dict = {self.t_X : xb}))
                 self.Loss.append(self.losses[-1] / nb)
                 
-        return sess
+        return self.sess
     
                 
     def visualise_manifold(self, x, y, sep = 2):
     
         """ Visualise the mapped 2D manifold """
     
-        Z    = sess.run(self.z_mean, feed_dict = {self.t_X : x})
+        Z    = self.sess.run(self.z_mean, feed_dict = {self.t_X : x})
         feed = {self.z : self.z_grid.reshape(self.display_n * self.display_n, self.nlatent)}
-        Xh   = sess.run(self.t_X_hat, feed_dict = feed).reshape(self.display_n, self.display_n, self.digit_size, self.digit_size)
+        Xh   = self.sess.run(self.t_X_hat, feed_dict = feed).reshape(self.display_n, self.display_n, self.digit_size, self.digit_size)
 
         plt.figure(figsize = (12, 10))
         plt.scatter(Z[:, 0], Z[:, 1], c = y)
@@ -1181,7 +1181,7 @@ class VAE:
         
     def sample(self):
         
-        return sess.run(self.t_X_hat, feed_dict = {self.z : np.random.normal(size = (1,self.nlatent))})
+        return self.sess.run(self.t_X_hat, feed_dict = {self.z : np.random.normal(size = (1,self.nlatent))})
     
     def visualise_image(self, image = False):
     
@@ -1358,11 +1358,11 @@ class DAE:
         
         saver   = tf.train.Saver()
         summary = tf.Summary()
-        sess    = tf.InteractiveSession()
-        sess.run(init)
+        self.sess    = tf.InteractiveSession()
+        self.sess.run(init)
 
         writer  = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
   
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -1382,7 +1382,7 @@ class DAE:
 
                 input_x_train = x_in[i*self.batch_size: (i+1)*self.batch_size]
 
-                _ , im , im_n, recon_im, loss, loss_summ = sess.run([self.trainer,
+                _ , im , im_n, recon_im, loss, loss_summ = self.sess.run([self.trainer,
                                                                      self.im, 
                                                                      self.im_n, 
                                                                      self.recon_im, 
@@ -1394,9 +1394,9 @@ class DAE:
                 writer.add_summary(loss_summ, epoch * self.nb_iterations + i)
                 self.Loss.append(loss)
 
-            saver.save(sess, self.output_dir, global_step=epoch)  
+            saver.save(self.sess, self.output_dir, global_step=epoch)  
 
-        return sess
+        return self.sess
     
     def single_accuracy(self, test_image, noise , test_size = 5):
 
@@ -1406,7 +1406,7 @@ class DAE:
 
         ims      = ims.reshape(test_size, self.len_edge1, self.len_edge2, 1)
 
-        recon_im = sess.run(self.recon_im, feed_dict = {self.im : ims, self.noise : noise})
+        recon_im = self.sess.run(self.recon_im, feed_dict = {self.im : ims, self.noise : noise})
         
         error    = np.mean(np.square(ims - self.inv_sigmoid(np.array(recon_im))))
 
@@ -1433,7 +1433,7 @@ class DAE:
             
     def add_noise(self, image, noise):
         
-        noisy_im = sess.run(self.im_n, feed_dict={self.im : image, self.noise : noise})
+        noisy_im = self.sess.run(self.im_n, feed_dict={self.im : image, self.noise : noise})
         
         return noisy_im
     
@@ -1441,7 +1441,7 @@ class DAE:
         
         noisy_im = noisy_im.reshape(1,28,28,1)
         
-        clean_im = sess.run(self.recon_im, feed_dict={self.im_n : noisy_im})
+        clean_im = self.sess.run(self.recon_im, feed_dict={self.im_n : noisy_im})
         
         return clean_im
     
@@ -1650,13 +1650,11 @@ class BNN:
 
         saver   = tf.train.Saver()
         summary = tf.Summary()
-        sess    = tf.Session()
-        sess.run(init)
-
-        self.sess = sess
+        self.sess    = tf.Session()
+        self.sess.run(init)
         
         writer = tf.summary.FileWriter(self.output_dir)
-        writer.add_graph(sess.graph)
+        writer.add_graph(self.sess.graph)
 
         if not os.path.exists(self.output_dir):
 
@@ -1679,20 +1677,20 @@ class BNN:
                 input_x_train = x_in[i*self.batch_size: (i+1)*self.batch_size]
                 input_y_train = y_in[i*self.batch_size: (i+1)*self.batch_size]
 
-                _  = sess.run([self.trainer, self.accuracy_update], 
+                _  = self.sess.run([self.trainer, self.accuracy_update], 
                      feed_dict={self.im: input_x_train, 
                                 self.labels: input_y_train,
                                 self.hold_prob:0.5})
 
-                y_preds   = np.argmax(preds, axis=0)
-                y_real    = np.argmax(input_y_train, axis=0)
-                acc_train = np.mean((y_preds==y_real)*1)
+#                 y_preds   = np.argmax(preds, axis=0)
+#                 y_real    = np.argmax(input_y_train, axis=0)
+#                 acc_train = np.mean((y_preds==y_real)*1)
                     
             if epoch == self.middle: self.posterior2 = self.save_posterior()
 
             if epoch == self.nb_epochs-1: self.posterior3 = self.save_posterior()
             
-            saver.save(sess, self.output_dir, global_step=epoch) 
+            saver.save(self.sess, self.output_dir, global_step=epoch) 
             
         return self.sess
 
